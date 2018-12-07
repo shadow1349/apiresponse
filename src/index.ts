@@ -1,85 +1,100 @@
-import { Response } from 'express';
+/**
+ * @file index.ts
+ * @author Sam Redmond
+ * @license MIT
+ */
 
-export interface IApiResponse {
+import { Response } from 'express';
+import { Codes, Status } from './httpCodes';
+
+/**
+ * @interface IMessage
+ * @description Message object
+ */
+export interface IMessage {
+  /**
+   * @var {string} code A code such as auth/success quickly describing the request outcome
+   */
+  code: string;
+
+  /**
+   * @var {string} message A message to give the user about their request
+   */
+  message: string;
+}
+
+/**
+ * @interface IAPIParams
+ * @description Defines parameters for the APIResponse class
+ */
+export interface IAPIParams {
+  /**
+   * @var {boolean} success If the request was successful or not
+   */
+  success: boolean;
+
+  /**
+   * @var {any} body Optional body object of any to send back
+   */
+  body?: any;
+
+  /**
+   * @var {Status} status Optional HTTP status, if not set will default to 200
+   */
+  status?: Status;
+}
+
+/**
+ * @interface IApiResponse
+ * @description Interface for the API response class
+ */
+export interface IAPIResponse {
   success: boolean;
   body?: any;
-  message: { code: string; message: string };
-  status: number;
+  message: IMessage;
+  status: Status;
 
   /**
    * @function Send
-   * @param {Response} res
+   * @param {Response} res the Express Response object
+   * @param {IMessage} message optional message you can supply
    * @returns {Response}
    * @description Sends an HTTP response back to the requester
    */
-  Send(res: Response): Response;
+  Send(res: Response, message?: IMessage): Response;
 }
 
-export class APIResponse implements IApiResponse {
+/**
+ * @class
+ * @description Implementation of the IAPIResponse interface
+ */
+export class APIResponse implements IAPIResponse {
   success: boolean;
   body?: any;
-  message: { code: string; message: string };
-  status: number;
+  message: IMessage;
+  status: Status;
 
   /**
    * @constructor
-   * @param {boolean} success If the request was successful or not
-   * @param {number} status HTTP status i.e. 200, 400, 500. Defaults to 200
-   * @param {any} body Optionally send any kind of body back to the user
+   * @param {IAPIParams} params The parameters of the response
    */
-  constructor(params: { success: boolean; body?: any; status?: number }) {
+  constructor(params: IAPIParams) {
     this.success = params.success;
     this.body = params.body;
     this.status = params.status ? params.status : 200;
-
-    if (this.status != 200) {
-      switch (this.status) {
-        case 401:
-          this.message = {
-            code: 'auth/unauthorized',
-            message: 'You are not authorized to access this route.'
-          };
-          break;
-        case 403:
-          this.message = {
-            code: 'auth/forbidden',
-            message: 'You are forbidden from accessing this route'
-          };
-          break;
-        case 500:
-          this.message = {
-            code: 'api/error',
-            message: 'Internal Server Error. Please try again later.'
-          };
-          break;
-        case 400:
-          this.message = {
-            code: 'api/request',
-            message: 'Invalid Request. Review your request and try again.'
-          };
-          break;
-        default:
-          this.message = {
-            code: 'api/error',
-            message: 'An error occured with your request. Please try again later.'
-          };
-      }
-    } else {
-      this.message = this.success
-        ? { code: 'api/success', message: 'Request Successful' }
-        : { code: 'api/error', message: 'Request Failed' };
-    }
+    this.message = Codes[this.status] ? Codes[this.status] : Codes[500];
   }
 
   /**
    * @function Send
-   * @param {Response} res
+   * @param {Response} res the Express Response object
+   * @param {IMessage} message optional message you can supply
    * @returns {Response}
    * @description Sends an HTTP response back to the requester
    */
-  Send(res: Response): Response {
+  Send(res: Response, message?: IMessage): Response {
     const payload = {
-      message: this.message,
+      message: message ? message : this.message,
       success: this.success,
       body: this.body
     };
