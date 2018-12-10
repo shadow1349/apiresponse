@@ -16,7 +16,6 @@ export interface IMessage {
    * @var {string} code A code such as auth/success quickly describing the request outcome
    */
   code: string;
-
   /**
    * @var {string} message A message to give the user about their request
    */
@@ -32,12 +31,10 @@ export interface IAPIParams {
    * @var {boolean} success If the request was successful or not
    */
   success: boolean;
-
   /**
    * @var {any} body Optional body object of any to send back
    */
   body?: any;
-
   /**
    * @var {Status} status Optional HTTP status, if not set will default to 200
    */
@@ -49,10 +46,22 @@ export interface IAPIParams {
  * @description Interface for the API response class
  */
 export interface IAPIResponse {
+  /**
+   * @var {boolean} success if the request was successful or not
+   */
   success: boolean;
+  /**
+   * @var {any} body optional body of the response
+   */
   body?: any;
+  /**
+   * @var {IMessage} message Code and Message set based on the status of the response
+   */
   message: IMessage;
-  status: Status;
+  /**
+   * @var {Status} status The HTTP status code of the response
+   */
+  status?: Status;
 
   /**
    * @function Send
