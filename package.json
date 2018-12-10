@@ -1,6 +1,6 @@
 {
   "name": "@sredmond/apiresponse",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "API Response gives you an easy way to send a standardized response with Express.",
   "main": "lib/index.js",
   "scripts": {
@@ -8,7 +8,8 @@
     "test": "node_modules/.bin/mocha -r ts-node/register src/**/*.spec.ts"
   },
   "repository": {
-    "type": "git"
+    "type": "git",
+    "url": "https://github.com/shadow1349/apiresponse"
   },
   "keywords": [
     "expressjs",
