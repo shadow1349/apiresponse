@@ -1,7 +1,12 @@
-import { APIResponse } from './index';
+/**
+ * @file index.spec.ts
+ * @author Sam Redmond
+ * @license MIT
+ */
+
+import { APIResponse, Codes } from './index';
 import { expect } from 'chai';
 import 'mocha';
-import { Codes } from './httpCodes';
 
 describe('Successful API Response', () => {
   const response = new APIResponse({ success: true });

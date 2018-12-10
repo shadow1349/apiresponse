@@ -1,6 +1,6 @@
 {
   "name": "@sredmond/apiresponse",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "API Response gives you an easy way to send a standardized response with Express.",
   "main": "lib/index.js",
   "scripts": {
@@ -19,7 +19,7 @@
     "apiresponse"
   ],
   "author": "Sam redmond",
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
     "@types/chai": "^4.1.7",
     "@types/express": "^4.16.0",
