@@ -1,0 +1,103 @@
+###############################
+#   OG-FUNCTIONS DEPLOYMENT   #
+###############################
+version: 2
+
+defaults: &defaults
+  working_directory: ~/apiresponse
+  docker:
+    - image: circleci/node:9.8
+
+jobs:
+  # Test and lint the project
+  test:
+    <<: *defaults  
+    steps:
+      - checkout
+
+      - restore_cache:
+          keys:
+          - v1-dependencies-{{ checksum "package.json" }}
+	        # fallback to using the latest cache if no exact match is found
+          - v1-dependencies-
+
+      - run:
+          name: Install Dependiencis
+          command: npm install
+
+      - run:
+          name: Lint Project
+          command: npm run lint
+
+      - run:
+          name: Run Tests
+          command: npm run test
+
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1-dependencies-{{ checksum "package.json" }}
+
+      # Make sure that the node_modues is persisted in the workspace for the build step
+      - persist_to_workspace:
+          root: ~/apiresponse
+          paths:
+            - .
+  
+  # Build using tsc
+  build:
+    <<: *defaults  
+    steps:
+      - checkout
+
+      - attach_workspace:
+          at: ~/apiresponse
+
+      - run:
+          name: Install Dependiencis
+          command: npm install
+
+      - run:
+          name: Build Project
+          command: npm run build
+
+      # Make sure that the dist folder is persisted in the workspace for the deploy step
+      - persist_to_workspace:
+          root: ~/apiresponse
+          paths:
+            - .
+
+  # Deploy the build project
+  deploy:
+    <<: *defaults  
+    steps:
+      - checkout
+
+      - attach_workspace:
+          at: ~/apiresponse
+
+      - run:
+          name: Authenticate With NPM
+          command: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > ~/apiresponse/.npmrc
+
+      - run:
+          name: Deploy To NPM
+          command: npm publish
+
+# Deployment Workflows
+workflows:
+  version: 2
+  -deploy:
+    jobs:
+      - test
+      - build:
+          requires:
+            - test
+      - deploy:
+          requires:
+            - build
+          context: NPM
+          filters:
+            branches:
+              only: master
+            
