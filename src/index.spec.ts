@@ -86,4 +86,4 @@ describe('API Response', () => {
   it('body should be an array', () => {
     expect(response.body).to.be.an('array');
   });
-});
+}); 
