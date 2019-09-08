@@ -1,12 +1,13 @@
 {
   "name": "@sredmond/apiresponse",
-  "version": "1.0.5",
+  "version": "2.0.0",
   "description": "API Response gives you an easy way to send a standardized response with Express.",
   "main": "lib/index.js",
   "scripts": {
     "build": "node_modules/.bin/tsc",
     "lint": "node_modules/.bin/tslint --project tsconfig.json",
-    "test": "node_modules/.bin/mocha -r ts-node/register src/**/*.spec.ts"
+    "test": "node_modules/.bin/mocha -r ts-node/register src/**/*.spec.ts",
+    "deply": "node deploy.js"
   },
   "repository": {
     "type": "git",
