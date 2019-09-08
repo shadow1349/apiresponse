@@ -1,14 +1,24 @@
 {
   "compilerOptions": {
-    "module": "umd",
+    "module": "commonjs",
+    "moduleResolution": "node",
     "sourceMap": true,
     "declaration": true,
     "outDir": "lib",
     "strict": true,
     "target": "es6",
-    "lib": ["dom", "es6", "es5"]
+    "lib": [
+      "dom",
+      "es6",
+      "es5"
+    ]
   },
   "compileOnSave": true,
-  "include": ["src/**/*"],
-  "exclude": ["node_modules", "src/**/*.spec.ts"]
+  "include": [
+    "src/**/*"
+  ],
+  "exclude": [
+    "node_modules",
+    "src/**/*.spec.ts"
+  ]
 }

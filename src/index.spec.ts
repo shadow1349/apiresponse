@@ -1,12 +1,7 @@
-/**
- * @file index.spec.ts
- * @author Sam Redmond
- * @license MIT
- */
-
-import { APIResponse, Codes } from './index';
 import { expect } from 'chai';
 import 'mocha';
+import APIResponse from './APIResponse';
+import { Codes } from './Codes';
 
 describe('Successful API Response', () => {
   const response = new APIResponse({ success: true });
@@ -86,4 +81,4 @@ describe('API Response', () => {
   it('body should be an array', () => {
     expect(response.body).to.be.an('array');
   });
-}); 
+});
