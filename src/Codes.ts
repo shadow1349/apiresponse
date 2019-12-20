@@ -1,11 +1,4 @@
 /**
- * @file Codes.ts
- * @author Sam Redmond
- * @license MIT
- */
-
-
-/**
  * @constant Codes
  * @description A list of messagees that will be configurable
  */
