@@ -8,7 +8,7 @@ export interface IMessage {
   /**
    * @var {string} code A code such as auth/success quickly describing the request outcome
    */
-  code: string;
+  code?: string;
   /**
    * @var {string} message A message to give the user about their request
    */
