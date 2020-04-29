@@ -1,4 +1,4 @@
-import { Response } from 'express';
+import { Response } from "express";
 
 /**
  * @interface IMessage
@@ -111,26 +111,27 @@ export type Status =
  * @interface IAPIParams
  * @description Defines parameters for the APIResponse class
  */
-export interface IAPIParams {
+export interface IAPIParams<T> {
   /**
    * @var {boolean} success If the request was successful or not
    */
   success: boolean;
   /**
-   * @var {any} body Optional body object of any to send back
+   * @var {T} body Optional body object of any to send back
    */
-  body?: any;
+  body?: T;
   /**
    * @var {Status} status Optional HTTP status, if not set will default to 200
    */
   status?: Status;
+  message?: IMessage;
 }
 
 /**
  * @interface IAPIResponse
  * @description API Response Model
  */
-export interface IAPIResponse {
+export interface IAPIResponse<T> {
   /**
    * @var {boolean} success if the request was successful or not
    */
@@ -138,7 +139,7 @@ export interface IAPIResponse {
   /**
    * @var {any} body optional body of the response
    */
-  body?: any;
+  body?: T;
   /**
    * @var {IMessage} message Code and Message set based on the status of the response
    */
@@ -147,13 +148,4 @@ export interface IAPIResponse {
    * @var {Status} status The HTTP status code of the response
    */
   status?: Status;
-
-  /**
-   * @function Send
-   * @param {Response} res the Express Response object
-   * @param {IMessage} message optional message you can supply
-   * @returns {Response}
-   * @description Sends an HTTP response back to the requester
-   */
-  Send(res: Response, message?: IMessage): Response;
 }
