@@ -6,7 +6,7 @@ import { IAPIParams, IAPIResponse, IMessage, Status } from "./Models";
  * @class
  * @description Implementation of the IAPIResponse interface
  */
-export default class APIResponse<T> implements IAPIResponse<T> {
+export class APIResponse<T> implements IAPIResponse<T> {
   success: boolean;
   body?: T;
   message: IMessage;

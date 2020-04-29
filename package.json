@@ -1,6 +1,6 @@
 {
   "name": "@sredmond/apiresponse",
-  "version": "2.0.2",
+  "version": "2.0.2-1",
   "description": "API Response gives you an easy way to send a standardized response with Express.",
   "main": "lib/index.js",
   "scripts": {
